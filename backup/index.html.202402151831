@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>raspitemp</title>
+<style>
+	table , td, th {
+		border: 1px solid #595959;
+		border-collapse: collapse;
+	}
+	td {
+		padding: 3px;
+		width: 150px;
+		height: 60px;
+		text-align: center;
+	}
+	th {
+		padding: 3px;
+		width: 3px;
+		height: 3px;
+		background: #212121;
+	}
+	.temperatures {
+		font-size: 170%;
+		font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
+		background-color: crimson;
+	}
+</style>
+</head>
+<body>
+	<!--/socket~.jsによってブラウザ上でsocket.ioが使えるようになる-->
+	<script src="/socket.io/socket.io.js"></script>
+
+		<table>
+			<tbody>
+				<tr>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+				</tr>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<td></td>
+					<th></th>
+					<td class="temperatures">Raspberry Pi 24<br>[<div style="display: inline-block; _display: inline;" class="temperatures" id="temp24"></div>]℃</td>
+					<th></th>
+					<td>Raspberry Pi 25<br>[<div style="display: inline-block; _display: inline;" class="temperatures" id="temp25"></div>]℃</td>
+					<th></th>
+					<td>Raspberry Pi 26<br>[<div style="display: inline-block; _display: inline;" class="temperatures" id="temp26"></div>]℃</td>
+					<th></th>
+					<td></td>
+				</tr>
+				<tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+					<th></th>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+<!--script-->
+		<script>
+		//Raspberry Pi 24
+			/*socket通信の確立*/
+			const socket = io();
+			//id属性temp24を収集してtemp24eleに詰め込む
+			const temp24txt = document.getElementById('temp24');
+			//temp24を受け取った時の動作
+			socket.on('getTempRas24', (tempRas24) => {
+				console.log(`(client side)tempRas24: ${tempRas24}`);
+				tempRas24 = tempRas24/1000;
+				//tempRas24の内容(温度)をtemp24eleに代入
+				temp24txt.textContent = tempRas24;
+			});
+		//Raspberry Pi 25
+			//id属性temp25を収集してtemp24eleに詰め込む
+			const temp25txt = document.getElementById('temp25');
+			//temp24を受け取った時の動作
+			socket.on('getTempRas25', (tempRas25) => {
+				console.log(`(client side)tempRas25: ${tempRas25}`);
+				tempRas25 = tempRas25/1000;
+				//tempRas25の内容(温度)をtemp25eleに代入
+				temp25txt.textContent = tempRas25;
+			});
+		//Raspberry Pi 26
+			//id属性temp26を収集してtemp26eleに詰め込む
+			const temp26txt = document.getElementById('temp26');
+			//temp26を受け取った時の動作
+			socket.on('getTempRas26', (tempRas26) => {
+				console.log(`(client side)tempRas26: ${tempRas26}`);
+				tempRas26 = tempRas26/1000;
+				//tempRas24の内容(温度)をtemp26eleに代入
+				temp26txt.textContent = tempRas26;
+			});
+		</script>
+</body>
+</html>

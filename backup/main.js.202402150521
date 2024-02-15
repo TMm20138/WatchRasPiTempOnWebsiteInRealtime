@@ -1,0 +1,20 @@
+const path = require("path");
+const fs = require('fs');
+const http = require("http");
+const port = 48774;
+
+const server = http.createServer((request, response) => {
+    response.writeHead(200, {
+      "Content-Type": "text/html"
+    });
+	//textにtemp24.txtの内容をutf-8で代入
+	let text = fs.readFileSync("./get-temp/temp24.txt", {encoding: 'utf-8'});
+	//textを返信する
+	response.end(text);
+	//logに記載する内容
+    console.log(`Sent a response : ${text}`);
+});
+//このnodejsを待機させるportの指定(48774)
+server.listen(port);
+//logに記述する内容
+console.log(`The server has started and is listening on port number: ${port}`);
